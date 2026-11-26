@@ -1,15 +1,6 @@
-const CACHE = 'mumu-shell-8d2ad8eb285d';
+const CACHE = 'mumu-shell-v25-20261126';
 const SHELL = ['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/icons/icon-maskable.png', '/icons/apple-touch-icon.png'];
-self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting())); });
-self.addEventListener('activate', event => {event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('mumu-shell-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-// Only the public static app shell is cached. Never cache API or private user data.
-self.addEventListener('fetch',event=>{
- const r=event.request,u=new URL(r.url);
- if(r.method!=='GET'||u.origin!==self.location.origin)return;
- if(r.mode==='navigate'&&(u.pathname==='/'||u.pathname==='/index.html')){
-   event.respondWith(fetch(r,{cache:'no-cache'}).catch(()=>caches.match('/')));return;
- }
- if(SHELL.includes(u.pathname)&&u.pathname!=='/'){
-   event.respondWith(fetch(r).catch(()=>caches.match(u.pathname)));return;
- }
-});
+self.addEventListener('install', event => {event.waitUntil((async()=>{const cache=await caches.open(CACHE);const response=await fetch('/',{cache:'reload'});if(!response.ok)throw new Error('App shell unavailable');await cache.put('/',response);await Promise.all(SHELL.slice(1).map(async path=>{try{const r=await fetch(path,{cache:'reload'});if(r.ok)await cache.put(path,r);}catch{}}));await self.skipWaiting();})());});
+self.addEventListener('activate',event=>{event.waitUntil((async()=>{for(const key of await caches.keys()){if(key.startsWith('mumu-shell-')&&key!==CACHE)await caches.delete(key);}await self.clients.claim();})());});
+// Cache only public static files, not private data or API calls.
+self.addEventListener('fetch',event=>{const r=event.request,u=new URL(r.url);if(r.method!=='GET'||u.origin!==self.location.origin)return;if(r.mode==='navigate'&&(u.pathname==='/'||u.pathname==='/index.html')){event.respondWith((async()=>{try{const response=await fetch(r,{cache:'no-cache'});if(response.ok){const c=await caches.open(CACHE);await c.put('/',response.clone());}return response;}catch{return (await caches.match('/',{cacheName:CACHE}))||Response.error();}})());return;}if(SHELL.includes(u.pathname)&&u.pathname!=='/'){event.respondWith((async()=>{try{const response=await fetch(r);if(response.ok){const c=await caches.open(CACHE);await c.put(u.pathname,response.clone());}return response;}catch{return (await caches.match(u.pathname,{cacheName:CACHE}))||Response.error();}})());}});
