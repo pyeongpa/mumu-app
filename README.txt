@@ -26,3 +26,7 @@ V66 FINAL: V56 개인 결과 및 V65 커플 결과 통합. 고해상도 배포 �
 V68: 하단 메뉴 홈 / 테스트 / 발자국 / 보관함. 테스트 허브 추가.
 
 V69: Figma 253:77 original test icon; mobile zoom restrictions; cache v69.
+
+V70: dress room, six costume assets, couple preview, effects, local closet.
+
+V71: 단색 페이지 배경 #FFF0F5 통일. 일러스트 및 카드 유지.
