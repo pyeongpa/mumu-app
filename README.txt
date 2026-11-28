@@ -22,3 +22,7 @@ V45: shop with local coin balance and inventory; 5 coins per new completed missi
 V48: Move test count above start button; unify test flow safe-area background.
 
 V66 FINAL: V56 개인 결과 및 V65 커플 결과 통합. 고해상도 배포 이미지 복원. 상대방은 같은 기기에서 12문항을 직접 입력하며, 서버 동기화 및 커플 AI 분석은 미구현. 기존 manifest 및 icons 폴더는 삭제하지 마세요 (V49 ZIP에 포함되지 않았던 기존 리소스). 기존 저장소에 덮어쓰기 방식으로 배포.
+
+V68: 하단 메뉴 홈 / 테스트 / 발자국 / 보관함. 테스트 허브 추가.
+
+V69: Figma 253:77 original test icon; mobile zoom restrictions; cache v69.
