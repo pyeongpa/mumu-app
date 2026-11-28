@@ -1,4 +1,4 @@
-const CACHE = 'mumu-shell-v33-20261126';
+const CACHE = 'mumu-shell-v44-20261126';
 const SHELL = ['/', '/manifest.webmanifest', '/icons/icon-192.png', '/icons/icon-512.png', '/icons/icon-maskable.png', '/icons/apple-touch-icon.png'];
 self.addEventListener('install', event => {event.waitUntil((async()=>{const cache=await caches.open(CACHE);const response=await fetch('/',{cache:'reload'});if(!response.ok)throw new Error('App shell unavailable');await cache.put('/',response);await Promise.all(SHELL.slice(1).map(async path=>{try{const r=await fetch(path,{cache:'reload'});if(r.ok)await cache.put(path,r);}catch{}}));await self.skipWaiting();})());});
 self.addEventListener('activate',event=>{event.waitUntil((async()=>{for(const key of await caches.keys()){if(key.startsWith('mumu-shell-')&&key!==CACHE)await caches.delete(key);}await self.clients.claim();})());});
