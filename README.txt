@@ -14,3 +14,5 @@ V42: 분석 본문 강조 제거, 일반 글자 굵기로 통일.
 V43: Figma Frame 1에서 렌더링한 16종 캐릭터 이미지 내장. 원본 다운로드 제한으로 축소된 렌더 이미지 사용. 별도 등록 및 외부 이미지 URL 불필요.
 
 V44: 이전 제작 원본 캐릭터 시트와 13번 고해상도 원본으로 교체. 원래 해상도 및 투명 배경 유지, 무손실 WebP 내장.
+
+V45: shop with local coin balance and inventory; 5 coins per new completed mission. No character dressing or server sync yet.
